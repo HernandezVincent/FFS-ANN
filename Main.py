@@ -10,8 +10,10 @@ def get_data(testName):
 
     df = pd.read_csv('Data/TestData.csv', sep = ';')
     df.dropna(how = 'any')
-    inPutName = ['shoulder0_X', 'shoulder0_Y', 'shoulder0_Z', 'elbow_X', 'elbow_Y', 'elbow_Z',
-                 'wrist_hand_X', 'wrist_hand_Y', 'wrist_hand_Z', 'EF_X', 'EF_Y', 'EF_Z', 'SubjectMass']
+    inPutName = ['shoulder0_X', 'shoulder0_Y', 'shoulder0_Z',
+                 'elbow_X', 'elbow_Y', 'elbow_Z',
+                 'wrist_hand_X', 'wrist_hand_Y', 'wrist_hand_Z',
+                 'EF_X', 'EF_Y', 'EF_Z', 'SubjectMass']
     dataInput = df[inPutName].as_matrix()
 
     if testName == 'Index':
