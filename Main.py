@@ -6,6 +6,7 @@ from itertools import chain
 from sklearn import linear_model
 from sklearn.metrics import r2_score
 
+print('a')
 def get_data(testName):
 
     df = pd.read_csv('Data/TestData.csv', sep = ';')
