@@ -14,34 +14,19 @@
   </component>
   <component name="ExecutionTargetManager" SELECTED_TARGET="default_target" />
   <component name="FileEditorManager">
-    <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="Main.py" pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/Main.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="0">
-              <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="6" selection-end-column="36" />
-              <folding>
-                <element signature="e#0#19#0" expanded="true" />
-                <element signature="e#223#1273#0" expanded="false" />
-                <element signature="e#1307#1606#0" expanded="false" />
-                <element signature="e#1659#1794#0" expanded="false" />
-                <element signature="e#1842#1977#0" expanded="false" />
-                <element signature="e#2028#2720#0" expanded="false" />
-                <element signature="e#2816#2877#0" expanded="false" />
-                <element signature="e#2988#3797#0" expanded="false" />
-                <element signature="e#3843#4954#0" expanded="false" />
-                <element signature="e#4990#5439#0" expanded="false" />
-                <element signature="e#5530#5801#0" expanded="false" />
-                <element signature="e#5849#6124#0" expanded="false" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-    </leaf>
+    <leaf SIDE_TABS_SIZE_LIMIT_KEY="300" />
   </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="IdeDocumentHistory">
+    <option name="CHANGED_PATHS">
+      <list>
+        <option value="$PROJECT_DIR$/Main.py" />
+        <option value="$USER_HOME$/Downloads/Doc.py" />
+        <option value="$PROJECT_DIR$/Doc.py" />
+      </list>
+    </option>
   </component>
   <component name="ProjectFrameBounds">
     <option name="x" value="-8" />
@@ -237,7 +222,7 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1936" height="1056" extended-state="6" />
-    <editor active="true" />
+    <editor active="false" />
     <layout>
       <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.17640863" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
@@ -246,7 +231,7 @@
       <window_info id="Python Console" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.2534319" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
-      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.32946146" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Terminal" active="true" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.5163675" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
       <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
@@ -272,39 +257,55 @@
           <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding>
             <element signature="e#0#19#0" expanded="true" />
-            <element signature="e#223#1273#0" expanded="false" />
-            <element signature="e#1307#1606#0" expanded="false" />
-            <element signature="e#1659#1794#0" expanded="false" />
-            <element signature="e#1842#1977#0" expanded="false" />
-            <element signature="e#2028#2720#0" expanded="false" />
-            <element signature="e#2816#2877#0" expanded="false" />
-            <element signature="e#2988#3797#0" expanded="false" />
-            <element signature="e#3843#4954#0" expanded="false" />
-            <element signature="e#4990#5439#0" expanded="false" />
-            <element signature="e#5530#5801#0" expanded="false" />
-            <element signature="e#5849#6124#0" expanded="false" />
+            <element signature="e#237#1287#0" expanded="false" />
+            <element signature="e#1321#1620#0" expanded="false" />
+            <element signature="e#1673#1808#0" expanded="false" />
+            <element signature="e#1856#1991#0" expanded="false" />
+            <element signature="e#2042#2734#0" expanded="false" />
+            <element signature="e#2830#2891#0" expanded="false" />
+            <element signature="e#3002#3811#0" expanded="false" />
+            <element signature="e#3857#4968#0" expanded="false" />
+            <element signature="e#5004#5453#0" expanded="false" />
+            <element signature="e#5544#5815#0" expanded="false" />
+            <element signature="e#5863#6138#0" expanded="false" />
           </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/Main.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="6" selection-end-column="36" />
+        <state relative-caret-position="154">
+          <caret line="7" column="13" lean-forward="false" selection-start-line="7" selection-start-column="13" selection-end-line="7" selection-end-column="13" />
           <folding>
             <element signature="e#0#19#0" expanded="true" />
-            <element signature="e#223#1273#0" expanded="false" />
-            <element signature="e#1307#1606#0" expanded="false" />
-            <element signature="e#1659#1794#0" expanded="false" />
-            <element signature="e#1842#1977#0" expanded="false" />
-            <element signature="e#2028#2720#0" expanded="false" />
-            <element signature="e#2816#2877#0" expanded="false" />
-            <element signature="e#2988#3797#0" expanded="false" />
-            <element signature="e#3843#4954#0" expanded="false" />
-            <element signature="e#4990#5439#0" expanded="false" />
-            <element signature="e#5530#5801#0" expanded="false" />
-            <element signature="e#5849#6124#0" expanded="false" />
+            <element signature="e#237#1287#0" expanded="false" />
+            <element signature="e#1321#1620#0" expanded="false" />
+            <element signature="e#1673#1808#0" expanded="false" />
+            <element signature="e#1856#1991#0" expanded="false" />
+            <element signature="e#2042#2734#0" expanded="false" />
+            <element signature="e#2830#2891#0" expanded="false" />
+            <element signature="e#3002#3811#0" expanded="false" />
+            <element signature="e#3857#4968#0" expanded="false" />
+            <element signature="e#5004#5453#0" expanded="false" />
+            <element signature="e#5544#5815#0" expanded="false" />
+            <element signature="e#5863#6138#0" expanded="false" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$USER_HOME$/Downloads/Doc.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="101">
+          <caret line="174" column="10" lean-forward="true" selection-start-line="174" selection-start-column="10" selection-end-line="174" selection-end-column="10" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Doc.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="220">
+          <caret line="22" column="38" lean-forward="false" selection-start-line="22" selection-start-column="38" selection-end-line="22" selection-end-column="38" />
+          <folding />
         </state>
       </provider>
     </entry>
