@@ -3,7 +3,13 @@
 
 ## *Force Feasible Set prediction with artificial neural network and musculoskeletal model*
 
-Use tensorflow-gpu 1.1.0
+# Dependencies
+
+- Python 3.5
+- Tensorflow-gpu 1.1.0
+- Numpy, pandas, matplotlib, itertools, sklearn
+
+# Overview
 
 In this repository, you can fin: 
 
