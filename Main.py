@@ -1,76 +1,40 @@
-import pandas as pd
+import matplotlib
+matplotlib.use('TKAgg')
 import numpy as np
 import matplotlib.pyplot as plt
 import tensorflow as tf
-from itertools import chain
 from sklearn import linear_model
 from sklearn.metrics import r2_score
-import pandas
 
-def get_data(testName):
+def get_data(test):
 
-    df = pd.read_csv('Data/TestData.csv', sep = ';')
-    df.dropna(how = 'any')
-    inPutName = ['shoulder0_X', 'shoulder0_Y', 'shoulder0_Z',
-                 'elbow_X', 'elbow_Y', 'elbow_Z',
-                 'wrist_hand_X', 'wrist_hand_Y', 'wrist_hand_Z',
-                 'EF_X', 'EF_Y', 'EF_Z', 'SubjectMass']
-    dataInput = df[inPutName].as_matrix()
+    directory = "Data\\" + test + "\\"
 
-    if testName == 'Index':
-        outPutName = ['Max', 'Volume', 'Isotropy', 'MainAxis_X', 'MainAxis_Y', 'MainAxis_Z']
-    else:
-        if testName == 'Vertex45':
-            angle = 45
-            nVertex = 26
-        elif testName == 'Vertex35':
-            angle = 35
-            nVertex = 56
-        elif testName == 'Vertex25':
-            angle = 25
-            nVertex = 106
-        elif testName == 'Vertex15':
-            angle = 15
-            nVertex = 266
+    name = "data_X.npy"
+    data_X = np.load(directory + name)
+    name = "Mean_X.npy"
+    mean_X = np.load(directory + name)
+    name = "Std_X.npy"
+    std_X = np.load(directory + name)
+    name = "name_X.npy"
+    name_X = np.load(directory + name)
 
-        outPutName = list(chain.from_iterable([['Theta_' + str(angle) + '_V' + str(s + 1) + '_N'] for s in range(nVertex)]))
+    # Standardize input
+    for i in range(data_X.shape[1]):
+        data_X[:, i] = (data_X[:, i] - mean_X[i]) / std_X[i]
 
-    dataOutput = df[outPutName].as_matrix()
+    name = "data_Y.npy"
+    data_Y = np.load(directory + name)
+    name = "Mean_Y.npy"
+    mean_Y = np.load(directory + name)
+    name = "Std_Y.npy"
+    std_Y = np.load(directory + name)
+    name = "name_Y.npy"
+    name_Y = np.load(directory + name)
 
-    return dataInput, dataOutput, outPutName, inPutName
+    return data_X, mean_X, std_X, name_X, data_Y, mean_Y, std_Y, name_Y
 
-def standardize_data(data):
-    std = []
-    mean = []
-    dataOut = data.copy()
-
-    for i in range(0, len(data[0])):
-        std.append(np.std(data[:, i], ddof = 1))
-        mean.append(np.mean(data[:, i]))
-        dataOut[:, i] = (data[:, i] - mean[i]) / std[i]
-
-    dataOut[np.isnan(dataOut)] = 0
-
-    return dataOut, mean, std
-
-def reverse_standardize_data(data, mean, std):
-    dataOut = data.copy()
-
-    for i in range(0, len(data[0])):
-        dataOut[:, i] = (data[:, i] * std[i]) + mean[i]
-
-    return dataOut
-
-def standardize_data_2(data, mean, std):
-
-    dataOut = data.copy()
-
-    for i in range(0, len(data[0])):
-        dataOut[:, i] = (data[:, i] - mean[i]) / std[i]
-
-    return dataOut
-
-def scatter_regresion_Plot(X, Y, testName):
+def scatter_regresion_Plot(X, Y, test):
 
     plt.scatter(X, Y, c = 'b', label = '_nolegend_', s = 1)
 
@@ -81,143 +45,136 @@ def scatter_regresion_Plot(X, Y, testName):
     regr = linear_model.LinearRegression()
     regr.fit(X, Y)
     plt.plot(X, regr.predict(X), "--", label = 'Regression', color = 'r')
-    plt.title(testName + ' ($R^2$: ' + "{0:.3f}".format(R2) + ")", fontsize = 14)
+    plt.title(test + ' ($R^2$: ' + "{0:.3f}".format(R2) + ")", fontsize = 14)
     plt.xlabel('True Values', fontsize = 12, weight = 'bold')
     plt.ylabel('Predicted Values', fontsize = 12, weight = 'bold')
     plt.legend(loc = 'upper left', bbox_to_anchor = (0, 1.0), fancybox = True, shadow = True, fontsize = 10)
     plt.subplots_adjust(left = 0.2, right = 0.9, bottom = 0.05, top = 0.97, wspace = 0.15, hspace = 0.3)
 
+    return R2
+
 class NN_Class:
 
-    def __init__(self, rootFolder = 'ANN/', testName = 'Vertex15'):
+    def __init__(NN, test):
 
-        self.rootFolder = rootFolder
-        self.testName = testName
+        NN.testName = test
 
-    def set_NN_properties(self, inputSize, layersSize, outputSize, activationFunction = 'sigmoid'):
+    def set_data(NN, data_X, mean_X, std_X, name_X, data_Y, mean_Y, std_Y, name_Y):
 
-        self.inputSize = inputSize
-        self.outputSize = outputSize
-        self.layersSize = layersSize
-        self.N_Layers = len(layersSize)
-        self.activationFunction = activationFunction
-        self.topology = [[inputSize, layersSize, outputSize], [activationFunction]]
+        NN.data_X = data_X
+        NN.mean_X = mean_X
+        NN.std_X = std_X
+        NN.name_X = name_X
+        NN.data_Y = data_Y
+        NN.mean_Y = mean_Y
+        NN.std_Y = std_Y
+        NN.name_Y = name_Y
 
-        self.saveFolder = self.rootFolder + "NN_" + '_'.join(
-            str(layersSize[i]) for i in range(self.N_Layers)) + "_" + '_'.join(
-            activationFunction) + '_' + self.testName + '/'
-        self.ANNPath = self.saveFolder + 'ANN'
-        self.meanStdInputPath = self.saveFolder + 'meanStdInput' + self.testName + '.csv'
-        self.meanStdOutputPath = self.saveFolder + 'meanStdOutput' + self.testName + '.csv'
+        NN.InputSize = NN.data_X.shape[1]
+        NN.OutputSize = NN.data_Y.shape[1]
 
-        print('topology: ' + str(self.topology) + ' - Saved in / loaded from: ' + self.saveFolder)
+    def build_network(NN):
 
-    def load_neural_network(self):
-
-        meanStdInput = pd.read_csv(self.meanStdInputPath, sep = ',').set_index('Unnamed: 0').as_matrix()
-        self.meanInput = np.array(meanStdInput[0])
-        self.stdInput = np.array(meanStdInput[1])
-        meanStdOutput = pd.read_csv(self.meanStdOutputPath, sep = ',').set_index('Unnamed: 0').as_matrix()
-        self.meanOutput = np.array(meanStdOutput[0])
-        self.stdOutput = np.array(meanStdOutput[1])
-
+        # Create graph and session
         tf.reset_default_graph()
 
-        with tf.Graph().as_default(), tf.Session() as self.sess:
+        config = tf.ConfigProto(log_device_placement=False)
+        config.gpu_options.allow_growth = True
 
-            self.x = tf.placeholder('float32', [None, self.inputSize])  # Input Tensor
-            self.y_ = tf.placeholder('float32', [None, self.outputSize])  # Output Tensor
-            self.create_NN()
-            self.sess.run(tf.global_variables_initializer())
-            self.sess = tf.Session(config = tf.ConfigProto(log_device_placement = True))
-            saver = tf.train.Saver()
-            saver = tf.train.import_meta_graph(self.ANNPath + '.meta')
-            saver.restore(self.sess, self.ANNPath)
-            print('Artificial Neural Network from: ' + self.saveFolder + ' loaded !')
+        NN.sess = tf.Session(config=config)
+        NN.keep_prob = tf.placeholder(tf.float32, name='keep_prob')
 
-    def create_NN(self):
+        with tf.variable_scope(tf.get_variable_scope()):
 
-        l = self.create_layers(self.x, self.inputSize, self.layersSize[0], activation = self.activationFunction[0])
-        if self.N_Layers > 1:
-            for i in range(self.N_Layers - 1):
-                l = self.create_layers(l, self.layersSize[i - 1], self.layersSize[i],
-                                       activation = self.activationFunction[i])
+            NN.x = tf.placeholder('float32', [None, NN.InputSize])  # Input Tensor
+            NN.y = tf.placeholder('float32', [None, NN.OutputSize])  # Output Tensor
+            print(NN.x)
 
-        self.y = self.create_layers(l, self.layersSize[-1], self.outputSize, activation = 'None')
+            with tf.name_scope('Dense'):
+                with tf.variable_scope('dense_layer_0', reuse=False):
+                    w = tf.get_variable("w", shape=[NN.InputSize, 512], initializer=tf.random_normal_initializer(mean=0., stddev=0.1))
+                    b = tf.get_variable("b", shape=[512], initializer=tf.constant_initializer(0.0))
+                    l = tf.add(tf.matmul(NN.x, w), b)
+                    l = tf.nn.sigmoid(l)
+                    print(l)
+                    l = tf.nn.dropout(l, NN.keep_prob)
+                    print(l)
 
-    def create_layers(self, inputs, in_size, out_size, activation = 'sigmoid'):
+                with tf.variable_scope('dense_layer_1', reuse=False):
+                    w = tf.get_variable("w", shape=[512, 1024], initializer=tf.random_normal_initializer(mean=0., stddev=0.1))
+                    b = tf.get_variable("b", shape=[1024], initializer=tf.constant_initializer(0.0))
+                    l = tf.add(tf.matmul(l, w), b)
+                    l = tf.nn.sigmoid(l)
+                    print(l)
+                    l = tf.nn.dropout(l, NN.keep_prob)
+                    print(l)
 
-        w = tf.Variable(tf.random_normal([in_size, out_size]))
-        b = tf.Variable(tf.random_normal([out_size]))
-        l = tf.add(tf.matmul(inputs, w), b)
+                with tf.variable_scope('dense_layer_2', reuse=False):
+                    w = tf.get_variable("w", shape=[1024, 512], initializer=tf.random_normal_initializer(mean=0., stddev=0.1))
+                    b = tf.get_variable("b", shape=[512], initializer=tf.constant_initializer(0.0))
+                    l = tf.add(tf.matmul(l, w), b)
+                    l = tf.nn.sigmoid(l)
+                    print(l)
+                    l = tf.nn.dropout(l, NN.keep_prob)
+                    print(l)
 
-        if activation == 'sigmoid':
-            l = tf.nn.sigmoid(l)
-        else:
-            l = l
-        return l
+                with tf.variable_scope('dense_layer_3', reuse=False):
+                    w = tf.get_variable("w", shape=[512, NN.OutputSize], initializer=tf.random_normal_initializer(mean=0., stddev=0.1))
+                    b = tf.get_variable("b", shape=[NN.OutputSize], initializer=tf.constant_initializer(0.0))
+                    NN.y_ = tf.add(tf.matmul(l, w), b)
+                    print(NN.y_)
 
-    def use_neural_network(self, X):
+        NN.saver = tf.train.Saver(save_relative_paths=True)
 
-        Input_data = {self.x: X}
-        predictions = self.sess.run(self.y, feed_dict = Input_data)
-        predicted_Y = np.array(predictions).astype('float32')
-        predicted_Y = reverse_standardize_data(predicted_Y, self.meanOutput, self.stdOutput)
+    def test(NN):
 
-        return predicted_Y
+        NN.build_network()
+
+        save_folder = ".\\" + "ANN\\" + NN.testName + "\\"
+        NN.sess.run(tf.global_variables_initializer())
+        NN.saver.restore(NN.sess, save_folder)
+
+        test_data = {NN.x: NN.data_X, NN.keep_prob: 1}
+        predictedValues_N = NN.y_.eval(feed_dict=test_data, session=NN.sess)
+
+        pred = predictedValues_N.copy()
+        for i in range(predictedValues_N.shape[1]):
+            pred[:, i] = (predictedValues_N[:, i] * NN.std_Y[i]) + NN.mean_Y[i]
+
+        true = NN.data_Y
+
+        return pred, true
 
 tests = ['Index', 'Vertex45', 'Vertex35', 'Vertex25', 'Vertex15']
+
 for test in tests:
-    inputSize = 13
     if test == 'Index':
-        fig = plt.figure(figsize = (14, 10))
-        outputSize = 6
-        layersSize = [50, 50, 50]
-        activationFunction = ['sigmoid', 'sigmoid', 'sigmoid']
+        fig = plt.figure(figsize=(14, 10))
         IndexName = ['Maximal force (N)', 'Volume $N^3$', 'Isotropy', 'Main Axis X', 'Main Axis Y', 'Main Axis Z']
     elif test == 'Vertex45':
-        fig = plt.figure(figsize = (14, 10))
+        fig = plt.figure(figsize=(14, 10))
         plt.subplot(2, 2, 1)
-        outputSize = 26
-        layersSize = [100, 100, 100]
-        activationFunction = ['sigmoid', 'sigmoid', 'sigmoid']
     elif test == 'Vertex35':
         plt.subplot(2, 2, 2)
-        outputSize = 56
-        layersSize = [200, 200, 200]
-        activationFunction = ['sigmoid', 'sigmoid', 'sigmoid']
     elif test == 'Vertex25':
         plt.subplot(2, 2, 3)
-        outputSize = 106
-        layersSize = [100, 100, 100]
-        activationFunction = ['sigmoid', 'sigmoid', 'sigmoid']
     elif test == 'Vertex15':
         plt.subplot(2, 2, 4)
-        outputSize = 266
-        layersSize = [200, 200, 200]
-        activationFunction = ['sigmoid', 'sigmoid', 'sigmoid']
 
     ########################### Load NN ############################
-
-    dataInput, dataOutput, outPutName, inPutName = get_data(testName = test)
-    inputSize, n_samples, outputSize = len(dataInput[0]), len(dataInput), len(dataOutput[0])
-    NN = NN_Class(rootFolder = 'ANN/', testName = test)
-    NN.set_NN_properties(inputSize, layersSize, outputSize, activationFunction)
-    NN.load_neural_network()
-
-    X = standardize_data_2(dataInput, NN.meanInput, NN.stdInput)
-    Y_true = dataOutput
-    Y_predicted = NN.use_neural_network(X)
+    data_X, mean_X, std_X, name_X, data_Y, mean_Y, std_Y, name_Y = get_data(test=test)
+    NN = NN_Class(test=test)
+    NN.set_data(data_X, mean_X, std_X, name_X, data_Y, mean_Y, std_Y, name_Y)
+    pred, true = NN.test()
 
     ########################### Regression and plot ###################################
-
     if test == 'Index':
         for i in range(len(IndexName)):
             plt.subplot(3, 2, i + 1)
-            scatter_regresion_Plot(Y_true[:, i], Y_predicted[:, i], IndexName[i])
+            scatter_regresion_Plot(true[:, i], pred[:, i], IndexName[i])
             axes = plt.gca()
     else:
-        scatter_regresion_Plot(Y_true[:, :], Y_predicted[:, :], test)
+        scatter_regresion_Plot(true[:, :], pred[:, :], test)
         axes = plt.gca()
         axes.set_xlim([-10, 1000])
         axes.set_ylim([-10, 1000])
