@@ -1,9 +1,12 @@
+# *Force Feasible Set prediction with artificial neural network and musculoskeletal model*
 
-# FFS-ANN
+### Dependencies
 
-## *Force Feasible Set prediction with artificial neural network and musculoskeletal model*
+- Python 3.5
+- Tensorflow-gpu 1.1.0
+- Numpy, pandas, matplotlib, itertools, sklearn
 
-Use tensorflow-gpu 1.1.0
+### Overview
 
 In this repository, you can fin: 
 
